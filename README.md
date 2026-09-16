@@ -72,7 +72,38 @@ locals {
 ```
 
 ## Задание 6
-`cores`/`memory`/`core_fraction` свернул в map-переменную `vms_resources`, `metadata` — в общую переменную для обеих ВМ. Неиспользуемые переменные закомментировал. `plan` — No changes.
+`cores`/`memory`/`core_fraction` свернул в map-переменную `vms_resources`, а `metadata` — в общую переменную для обеих ВМ:
+```hcl
+variable "vms_resources" {
+  type = map(object({
+    cores         = number
+    memory        = number
+    core_fraction = number
+  }))
+  default = {
+    web = { cores = 2, memory = 1, core_fraction = 20 }
+    db  = { cores = 2, memory = 2, core_fraction = 20 }
+  }
+}
+
+variable "metadata" {
+  type = map(string)
+  default = {
+    serial-port-enable = 1
+    ssh-keys           = "ubuntu:ssh-rsa AAAA..."
+  }
+}
+```
+Использование в ресурсе:
+```hcl
+resources {
+  cores         = var.vms_resources.web.cores
+  memory        = var.vms_resources.web.memory
+  core_fraction = var.vms_resources.web.core_fraction
+}
+metadata = var.metadata
+```
+Неиспользуемые переменные (`vm_web_cores`, `vm_db_memory` и т.д.) закомментировал. `terraform plan` — No changes.
 
 ## Задание 7 (*)
 ```
