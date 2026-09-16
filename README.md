@@ -10,7 +10,13 @@ Error: ... rpc error: code = FailedPrecondition desc = Platform "standart-v4" no
 
 `preemptible = true` и `core_fraction` — для экономии в учёбе. Preemptible-машина дешевле, но облако может остановить её в любой момент (живёт до 24 часов). `core_fraction` — гарантированная доля vCPU (20%), платишь только за часть ядра. Для учебной ВМ надёжность и полная мощность не нужны, зато грант расходуется медленнее.
 
-Скриншоты: `screenshots/1.png` (ВМ с внешним IP), `screenshots/2.png` (ssh + `curl ifconfig.me` с тем же IP).
+ВМ с внешним IP:
+
+![ВМ с внешним IP](screenshots/1.png)
+
+ssh + `curl ifconfig.me` (тот же IP):
+
+![ssh и curl](screenshots/2.png)
 
 ## Задание 2
 Хардкод-значения ресурсов вынес в переменные с префиксом `vm_web_`. Например:
